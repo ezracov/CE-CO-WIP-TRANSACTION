@@ -9,7 +9,7 @@
         form { max-width: 400px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
         .input-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 5px; font-weight: bold; }
-        input, select, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; background-white: white; }
+        input, select, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; background-color: white; }
         button { background-color: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; width: 100%; }
         button:hover { background-color: #45a049; }
     </style>
@@ -19,7 +19,6 @@
     <h2>Hubungi Kami</h2>
     
     <form id="submit-to-google-sheet">
-        <!-- PERUBAHAN: Input teks diganti menjadi elemen Select -->
         <div class="input-group">
             <label for="nama">Nama:</label>
             <select id="nama" name="nama" required>
@@ -41,11 +40,11 @@
             </select>
         </div>
 
+       <!-- PERUBAHAN 1: Menggunakan Input dengan Datalist agar bisa diketik & memfilter -->
        <div class="input-group">
             <label for="lensa">Lensa:</label>
-            <select id="lensa" name="lensa" required>
-                <option value="" disabled selected>-- Pilih Lensa --</option>
-            </select>
+            <input type="text" id="lensa" name="lensa" list="list-lensa-options" placeholder="Ketik atau pilih Lensa..." autocomplete="off" required>
+            <datalist id="list-lensa-options"></datalist>
         </div>
 
         <div class="input-group">
@@ -58,17 +57,16 @@
             <input type="number" id="qtyngrepair" name="qtyngrepair" required>
         </div>
 
-        
         <div class="input-group">
             <label for="detailngrepair">Detail NG:</label>
             <textarea id="detailngrepair" name="detailngrepair" rows="4" required></textarea>
         </div>
+
         <div class="input-group">
             <label for="qtyngscrap">Qty NG Scrap:</label>
             <input type="number" id="qtyngscrap" name="qtyngscrap" required>
         </div>
 
-        
         <div class="input-group">
             <label for="detailngscrap">Detail NG:</label>
             <textarea id="detailngscrap" name="detailngscrap" rows="4" required></textarea>
@@ -78,156 +76,125 @@
     </form>
 
     <script>
-        // 1. CONSTANT DAFTAR NAMA (Silakan ubah/tambah list ini sesuai kebutuhan)
+        // 1. CONSTANT DAFTAR NAMA
         const listKaryawan = [
-        'ALVIN SOPYAN',
-        'ARIO MAULANA NUGROHO',
-        'ASIH SUNARSIH',
-        'BAGAS FITRIANTO',
-        'ELIN DESRIYATI PRIYATNA',
-        'ETI HENRAWATI',
-        'FAJAR ADITYA PRATAMA ',
-        'HERU ANDI MULYANTO',
-        'INDRA HERMAWAN',
-        'ISMET RAHADIAN',
-        'JOKO SURYANTO',
-        'JOKO WIYANTO',
-        'KAMALLUDIN',
-        'KIKI SEPTIADI',
-        'LIA HASANAH',
-        'M IRZI FAHROZI',
-        'MANSYURAH HAMIDA KARSA',
-        'MOCH EZRA REYHANSYAH',
-        'RISKA',
-        'RIZAL ZULFIKAR',
-        'SARINAH',
-        'SHELLY APRILLIANTI',
-        'SITI NURJANAH',
-        'SUSANDI',
-        'SUTRISNO',
-        'VINA ERMANIA',
-        'WAHYU DARMAWAN',
-        'WIDIA NINGSIH',
-        'YULI ROSMANIAR',
-        'ZUHDI SYAKURI'
+            'ALVIN SOPYAN', 'ARIO MAULANA NUGROHO', 'ASIH SUNARSIH', 'BAGAS FITRIANTO',
+            'ELIN DESRIYATI PRIYATNA', 'ETI HENRAWATI', 'FAJAR ADITYA PRATAMA ', 'HERU ANDI MULYANTO',
+            'INDRA HERMAWAN', 'ISMET RAHADIAN', 'JOKO SURYANTO', 'JOKO WIYANTO', 'KAMALLUDIN',
+            'KIKI SEPTIADI', 'LIA HASANAH', 'M IRZI FAHROZI', 'MANSYURAH HAMIDA KARSA',
+            'MOCH EZRA REYHANSYAH', 'RISKA', 'RIZAL ZULFIKAR', 'SARINAH', 'SHELLY APRILLIANTI',
+            'SITI NURJANAH', 'SUSANDI', 'SUTRISNO', 'VINA ERMANIA', 'WAHYU DARMAWAN',
+            'WIDIA NINGSIH', 'YULI ROSMANIAR', 'ZUHDI SYAKURI'
         ];
 
         const listMesin = [
-            'TANPA MESIN',
-            'CE-01',
-            'CE-02',
-            'CE-03',
-            'CE-04',
-            'CE-05',
-            'CE-06',
-            'CE-07',
-            'CE-08',
-            'CE-09',
-            'CE-10',
-            'CE-11'
+            'CO-01', 'CE-01', 'CE-02', 'CE-03', 'CE-04', 'CE-05',
+            'CE-06', 'CE-07', 'CE-08', 'CE-09', 'CE-10', 'CE-11',
+            'CG-01',
+            'CG-02',
+            'CG-03',
+            'CG-04',
+            'CG-05',
+            'CG-06',
+            'SM-01',
+            'SM-02',
+            'SM-03',
+            'SM-04',
+            'SM-05',
+            'SM-06',
+            'SM-07',
+            'SM-08',
+            'SM-09',
+            'SM-10',
+            'SM-11',
+            'SM-12',
+            'SM-13',
+            'SM-14',
+            'SM-15',
+            'SM-16',
+            'SM-17',
+            'SM-18',
+            'SM-19',
+            'PO-01',
+            'PO-02',
+            'PO-03',
+            'PO-04',
+            'PO-05',
+            'PO-06',
+            'PO-07',
+            'PO-08',
+            'PO-09',
+            'PO-10',
+            'PO-11',
+            'PO-12',
+            'PO-13',
+            'PO-14',
+            'PO-15',
+            'PO-16',
+            'PO-17',
+            'PO-18',
+            'PO-19',
+            'PO-20',
+            'PO-21',
+            'PO-22',
+            'PO-23',
+            'PO-24',
+            'PO-25'
         ];        
 
         const listProses = [
-
-            'CE',
-            'CO PO',
-            'CO FI'
+            'CG','SM','PO PRODUKSI','PO REPAIR','PO RWK','CE', 'CO PO', 'CO FI'
         ];  
 
         const listLensa = [
-        'B-4545TG1-BO',
-        'B-4545TG2-BO',
-        'B-4545TG3-CO',
-        'B-EYEPIECE29104-CO',
-        'B-EYEPIECE29105-CO',
-        'B-EYEPIECE29107-CO',
-        'B-GAA1525L1-BO',
-        'B-GAA1525L2-BO',
-        'B-GAA1526L1-BO',
-        'B-GAA1526L2-BO',
-        'B-GAA1527-CO',
-        'B-LA3406-PA',
-        'B-LA5558-BO',
-        'B-LA5559-BO',
-        'B-LA5641-BO',
-        'B-LA5642-BO',
-        'B-LA7021-BOPA',
-        'B-LA7022-BOPA',
-        'B-LA8763-CO',
-        'B-LK0386-CO',
-        'B-LK3214-CO',
-        'B-LK6159-BOPA',
-        'B-LK6160-BOPA',
-        'B-LK6161-PA',
-        'B-LK6167-BO',
-        'B-LK6168-BO',
-        'B-LK6171-CO',
-        'B-LK6172-CO',
-         'B-LK6174-CO',
-         'B-LK6175-CO',
-         'B-LK6176-CO',
-         'B-LK6177-CO',
-         'B-LK6178-CO',
-         'B-LK6179-CO',
-        'B-LA8346-CO',
-        'B-LK6229-CO',
-        'B-LK6232-CO',
-        'B-LK6236-BO',
-        'B-LK6237-BO',
-        'B-LK6384-BO',
-        'B-LK6642-BO',
-        'B-LK6643-BO',
-        'B-LK6644-BO',
-        'B-LK6645-BO',
-        'B-LK6646-BO',
-        'B-LK6647-BO',
-        'B-LK7020-BO',
-        'B-LK7021-BO',
-        'B-LK7024-BO',
-        'B-LK7025-CO',
-        'B-XA9023101G1-PO',
-        'B-XA9023102G2-PO',
-        'B-XA9023103G3-PO'
+            'B-4545TG1-BO', 'B-4545TG2-BO', 'B-4545TG3-CO', 'B-EYEPIECE29104-CO',
+            'B-EYEPIECE29105-CO', 'B-EYEPIECE29107-CO', 'B-GAA1525L1-BO', 'B-GAA1525L2-BO',
+            'B-GAA1526L1-BO', 'B-GAA1526L2-BO', 'B-GAA1527-CO', 'B-LA3406-PA',
+            'B-LA5558-BO', 'B-LA5559-BO', 'B-LA5641-BO', 'B-LA5642-BO', 'B-LA7021-BOPA',
+            'B-LA7022-BOPA', 'B-LA8763-CO', 'B-LK0386-CO', 'B-LK3214-CO', 'B-LK6159-BOPA',
+            'B-LK6160-BOPA', 'B-LK6161-PA', 'B-LK6167-BO', 'B-LK6168-BO', 'B-LK6171-CO',
+            'B-LK6172-CO', 'B-LK6174-CO', 'B-LK6175-CO', 'B-LK6176-CO', 'B-LK6177-CO',
+            'B-LK6178-CO', 'B-LK6179-CO', 'B-LA8346-CO', 'B-LK6229-CO', 'B-LK6232-CO',
+            'B-LK6236-BO', 'B-LK6237-BO', 'B-LK6384-BO', 'B-LK6642-BO', 'B-LK6643-BO',
+            'B-LK6644-BO', 'B-LK6645-BO', 'B-LK6646-BO', 'B-LK6647-BO', 'B-LK7020-BO',
+            'B-LK7021-BO', 'B-LK7024-BO', 'B-LK7025-CO', 'B-XA9023101G1-PO',
+            'B-XA9023102G2-PO', 'B-XA9023103G3-PO'
         ];          
 
         // 2. LOGIKA UNTUK MEMASUKKAN CONST KE DROPDOWN
         const namaSelect = document.getElementById('nama');
-        
         listKaryawan.forEach(nama => {
             const option = document.createElement('option');
-            option.value = nama;       // Nilai yang dikirim ke Google Sheet
-            option.textContent = nama; // Teks yang muncul di layar browser
+            option.value = nama;
+            option.textContent = nama;
             namaSelect.appendChild(option);
         });
 
         const mesinSelect = document.getElementById('mesin');
-        
         listMesin.forEach(mesin => {
             const option = document.createElement('option');
-            option.value = mesin;       // Nilai yang dikirim ke Google Sheet
-            option.textContent = mesin; // Teks yang muncul di layar browser
+            option.value = mesin;
+            option.textContent = mesin;
             mesinSelect.appendChild(option);
         });
 
         const prosesSelect = document.getElementById('proses');
-        
         listProses.forEach(proses => {
-            const option = document.createElement('option');
-            option.value = proses;       // Nilai yang dikirim ke Google Sheet
-            option.textContent = proses; // Teks yang muncul di layar browser
+            const option = document.append? document.createElement('option') : document.createElement('option');
+            option.value = proses;
+            option.textContent = proses;
             prosesSelect.appendChild(option);
         });
 
-        const lensaSelect = document.getElementById('lensa');
-        
+        // PERUBAHAN 2: Mengisi opsi ke dalam <datalist> Lensa
+        const lensaDatalist = document.getElementById('list-lensa-options');
         listLensa.forEach(lensa => {
             const option = document.createElement('option');
-            option.value = lensa;       // Nilai yang dikirim ke Google Sheet
-            option.textContent = lensa; // Teks yang muncul di layar browser
-            lensaSelect.appendChild(option);
+            option.value = lensa; // Nilai ini yang akan otomatis tersaring saat diketik
+            lensaDatalist.appendChild(option);
         });
 
-        // 3. PROSES KIRIM DATA (Sama seperti sebelumnya)
+        // 3. PROSES KIRIM DATA
         const scriptURL = 'https://script.google.com/macros/s/AKfycbw--k_NxF8mMGrlSDUhbL7iLCF_dfwRGX0YpPBImF0Jhhs2Bd4Pq9WSM2Y75cDpSDaa/exec';
         const form = document.getElementById('submit-to-google-sheet');
 
